@@ -1,0 +1,28 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<h1>Food Menu</h1>
+
+{% if restaurants %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3">
+  {% for restaurant in restaurants %}
+  <div class="col">
+    <div class="card me-2" role="button" style="cursor: pointer;">
+      <img src="{{restaurant.image}}" alt="{{restaurant.name}} Restaurant"
+        style="aspect-ratio: 16 / 9; width: 100%; object-fit: cover;" />
+      <div class="card-body">
+        <a href="https://www.google.com">
+          <h5 class="card-title">{{restaurant.name}}</h5>
+        </a>
+        <p class="card-text">{{restaurant.description}}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+{% endif %}
+
+{% endblock %}
