@@ -5,23 +5,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}My Django App{% endblock %}</title>
+  <title>{% block title %}QueueSine{% endblock %}</title>
 
   <!-- Local Bootstrap 5 CSS -->
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
-  <!-- Load Bootstrap JS -->
-  <script src="{% static 'js/bootstrap.min.js' %}" defer></script>
-  <!-- htmx TODO: move it to local -->
+  <!-- Local Bootstrap 5 Bundle JS (Includes Popper) -->
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
+
+  <!-- HTMX TODO: move to local-->
   <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
-
 </head>
-
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-      <a class="navbar-brand" href="/">Restaurant POS</a>
+      <a class="navbar-brand" href="/">QueueSine</a>
     </div>
   </nav>
 
@@ -29,9 +28,6 @@
     {% block content %}
     {% endblock %}
   </main>
-
-  <!-- Local Bootstrap 5 JS Bundle -->
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
   {% block extra_js %}{% endblock %}
 </body>
