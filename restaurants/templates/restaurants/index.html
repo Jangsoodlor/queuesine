@@ -11,7 +11,7 @@
       <img src="{{restaurant.image}}" alt="{{restaurant.name}} Restaurant"
         style="aspect-ratio: 16 / 9; width: 100%; object-fit: cover;" />
       <div class="card-body">
-        <a href="https://www.google.com">
+        <a href="{% url 'restaurants:restaurant_detail' restaurant.pk %}">
           <h5 class="card-title">{{restaurant.name}}</h5>
         </a>
         <p class="card-text">{{restaurant.description}}</p>
@@ -20,9 +20,6 @@
   </div>
   {% endfor %}
 </div>
-
-
-
 {% endif %}
 
 {% endblock %}

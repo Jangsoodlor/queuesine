@@ -1,5 +1,6 @@
 from django.views import generic
-from .models import Restaurant
+from .models import Restaurant, Menu
+from django.shortcuts import render
 
 
 class RestaurantListView(generic.ListView):
@@ -14,3 +15,8 @@ class RestaurantListView(generic.ListView):
 class RestaurantDetailView(generic.DetailView):
     model = Restaurant
     template_name = "restaurants/detail.html"
+
+
+def restaurant_menus(request, pk: int):
+    context = {"menus": Menu.objects.filter(restaurant_id=pk)}
+    return render(request, "partials/menus.html", context)

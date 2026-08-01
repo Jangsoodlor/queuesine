@@ -5,7 +5,7 @@ import os
 from itertools import islice
 from django.core.management.base import BaseCommand
 
-from restaurants.models import Restaurant
+from restaurants.models import Restaurant, Menu
 
 
 class Command(BaseCommand):
@@ -37,6 +37,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"Reading CSV from {file_path}..."))
 
         self._seed_restaurants(file_path, limit)
+        self._seed_menus(file_path, limit)
 
     def print_seed_success(self, model: str, created_count: int, updated_count: int):
         self.stdout.write(
@@ -64,6 +65,7 @@ class Command(BaseCommand):
                     image=row["restaurantImageUrl"]
                     if row["restaurantImageUrl"]
                     else None,
+                    city=row["market"],
                 )
 
                 if created:
@@ -82,4 +84,20 @@ class Command(BaseCommand):
             rows = islice(reader, limit) if limit else reader
 
             for row in rows:
-                pass
+                restaurant = Restaurant.objects.get(name=row["restaurantName"])
+                if not restaurant:
+                    continue
+                _, created = Menu.objects.update_or_create(
+                    name=row["menuItemName"],
+                    description=row["menuItemDescription"],
+                    price=float(row["price"]),
+                    restaurant=restaurant,
+                    category=row["menuItemCategory"],
+                    image=row["menuItemImageUrl"] if row["menuItemImageUrl"] else None,
+                )
+                if created:
+                    created_count += 1
+                else:
+                    updated_count += 1
+
+        self.print_seed_success(Menu.__name__, created_count, updated_count)
