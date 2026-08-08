@@ -84,7 +84,12 @@ class Command(BaseCommand):
             rows = islice(reader, limit) if limit else reader
 
             for row in rows:
-                restaurant = Restaurant.objects.get(name=row["restaurantName"])
+                restaurant = Restaurant.objects.get(
+                    name=row["restaurantName"],
+                    address=row["restaurantAddress"]
+                    if row["restaurantAddress"]
+                    else row["market"],
+                )
                 if not restaurant:
                     continue
                 _, created = Menu.objects.update_or_create(

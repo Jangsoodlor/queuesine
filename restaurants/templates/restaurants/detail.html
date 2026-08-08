@@ -1,7 +1,19 @@
 {% extends 'base_template.html' %}
 
 {% block content %}
-<h1>Restaurant</h1>
+<h1>{{restaurant.name}}</h1>
+<p>{{restaurant.description}}</p>
+<p>{{restaurant.address}}</p>
+
+{% if restaurant.image %}
+<img src="{{ restaurant.image }}" alt="{{ restaurant.name }} Restaurant"
+  style="aspect-ratio: 16 / 9; width: 100%; object-fit: cover;"
+  onerror="this.onerror=null; this.src='{{ default_image_url }}';" />
+{% else %}
+<img src="{{ default_image_url }}" alt="{{ restaurant.name }} Restaurant"
+  style="aspect-ratio: 16 / 9; width: 100%; object-fit: cover;" />
+{% endif %}
+
 
 <div id="menus" hx-get="{% url 'restaurants:restaurant_menus' restaurant.pk %}" hx-trigger="load" hx-target="#menus">
   <!-- Optional placeholder while HTMX loads the menu -->

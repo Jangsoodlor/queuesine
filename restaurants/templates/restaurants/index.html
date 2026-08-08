@@ -1,20 +1,31 @@
 {% extends 'base_template.html' %}
 
+
 {% block content %}
+{% load static %}
+{% static 'images/restaurant.jpg' as default_image_url %}
+
 <h1>Food Menu</h1>
 
 {% if restaurants %}
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3">
   {% for restaurant in restaurants %}
   <div class="col">
-    <div class="card me-2" role="button" style="cursor: pointer;">
-      <img src="{{restaurant.image}}" alt="{{restaurant.name}} Restaurant"
+    <div class="card me-2">
+      {% if restaurant.image %}
+      <img src="{{ restaurant.image }}" alt="{{ restaurant.name }} Restaurant"
+        style="aspect-ratio: 16 / 9; width: 100%; object-fit: cover;"
+        onerror="this.onerror=null; this.src='{{ default_image_url }}';" />
+      {% else %}
+      <img src="{{ default_image_url }}" alt="{{ restaurant.name }} Restaurant"
         style="aspect-ratio: 16 / 9; width: 100%; object-fit: cover;" />
+      {% endif %}
+
       <div class="card-body">
         <a href="{% url 'restaurants:restaurant_detail' restaurant.pk %}">
-          <h5 class="card-title">{{restaurant.name}}</h5>
+          <h5 class="card-title">{{ restaurant.name }}</h5>
         </a>
-        <p class="card-text">{{restaurant.description}}</p>
+        <p class="card-text">{{ restaurant.description }}</p>
       </div>
     </div>
   </div>
