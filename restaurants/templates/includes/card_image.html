@@ -1,0 +1,8 @@
+{% if image %}
+<img src="{{ image }}" alt="{{ alt }}"
+  style="aspect-ratio: {{ aspect_ratio }}; width: 100%; height: 100%; object-fit: contain;"
+  onerror="this.onerror=null; this.src='{{ default_image }}';" />
+{% else %}
+<img src="{{ default_image }}" alt="{{ alt }}"
+  style="aspect-ratio: {{ aspect_ratio }}; width: 100%; object-fit: cover; object-position: center;" />
+{% endif %}

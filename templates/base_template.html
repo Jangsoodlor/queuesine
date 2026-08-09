@@ -18,13 +18,16 @@
 </head>
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="/">QueueSine</a>
+      <a class="navbar-brand" href="{% url 'restaurants:restaurant_index' %}">QueueSine</a>
     </div>
   </nav>
 
-  <main class="container">
+  {% block hero_banner %}
+  {% endblock %}
+
+  <main class="container mt-4">
     {% block content %}
     {% endblock %}
   </main>

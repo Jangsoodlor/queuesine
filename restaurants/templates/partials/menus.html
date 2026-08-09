@@ -1,15 +1,15 @@
 {% load static %}
-{% static 'images/food.jpg' as default_image_url %}
+{% static 'images/food.jpg' as default_image %}
+{% load card_image %}
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3">
   {% for menu in menus %}
   <div class="col">
     <div class="card me-2">
-      <img src=" {{menu.image}}" alt="{{menu.name}}" style="aspect-ratio: 16 / 9; width: 100%; object-fit: cover;"
-        onerror="this.onerror=null; this.src='{{default_image_url}}'" />
+      {% menu_card_image menu.image menu.name %}
       <div class="card-body">
         <h5 class="card-title">{{menu.name}}</h5>
-        <p class="card-text">{{menu.description|truncatechars:67}}</p>
+        <p class="card-text">{{menu.description|truncatechars:60}}</p>
         <p class="card-text">$ {{menu.price|floatformat:2}}</p>
       </div>
     </div>
