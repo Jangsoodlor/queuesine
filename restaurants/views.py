@@ -17,6 +17,6 @@ class RestaurantDetailView(generic.DetailView):
     template_name = "restaurants/detail.html"
 
 
-def restaurant_menus(request, pk: int):
+def menu_listing(request, pk: int):
     context = {"menus": Menu.objects.filter(restaurant_id=pk)}
-    return render(request, "partials/menus.html", context)
+    return render(request, "partials/menu_listing.html", context)

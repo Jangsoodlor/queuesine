@@ -5,7 +5,7 @@ from . import views
 app_name = "restaurants"
 
 htmx_urlpatterns = [
-    path("<int:pk>/menus/", views.restaurant_menus, name="restaurant_menus"),
+    path("<int:pk>/menus/", views.menu_listing, name="menu_listing"),
 ]
 
 urlpatterns = [

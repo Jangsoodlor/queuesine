@@ -19,7 +19,7 @@
 {% block content %}
 
 
-<div id="menus" hx-get="{% url 'restaurants:restaurant_menus' restaurant.pk %}" hx-trigger="load" hx-target="#menus">
+<div id="menus" hx-get="{% url 'restaurants:menu_listing' restaurant.pk %}" hx-trigger="load" hx-target="#menus">
   <!-- Optional placeholder while HTMX loads the menu -->
   <p>Loading menu...</p>
 </div>
