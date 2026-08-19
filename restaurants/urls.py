@@ -6,10 +6,11 @@ app_name = "restaurants"
 
 htmx_urlpatterns = [
     path("<int:pk>/menus/", views.menu_listing, name="menu_listing"),
+    path("restaurants/", views.restaurant_listing, name="restaurant_listing"),
 ]
 
 urlpatterns = [
-    path("", views.RestaurantListView.as_view(), name="restaurant_index"),
+    path("", views.restaurant_index, name="restaurant_index"),
     path(
         "<int:pk>/",
         views.RestaurantDetailView.as_view(),

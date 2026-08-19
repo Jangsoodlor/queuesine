@@ -3,13 +3,8 @@ from .models import Restaurant, Menu
 from django.shortcuts import render
 
 
-class RestaurantListView(generic.ListView):
-    template_name = "restaurants/index.html"
-    context_object_name = "restaurants"
-
-    def get_queryset(self):
-        restaurants = Restaurant.objects.all()
-        return restaurants.order_by("name")
+def restaurant_index(request):
+    return render(request, "restaurants/index.html")
 
 
 class RestaurantDetailView(generic.DetailView):
@@ -20,3 +15,8 @@ class RestaurantDetailView(generic.DetailView):
 def menu_listing(request, pk: int):
     context = {"menus": Menu.objects.filter(restaurant_id=pk)}
     return render(request, "partials/menu_listing.html", context)
+
+
+def restaurant_listing(request):
+    context = {"restaurants": Restaurant.objects.all()}
+    return render(request, "partials/restaurant_listing.html", context)
