@@ -2,7 +2,11 @@
 
 
 {% block content %}
-<h1>Restaurants</h1>
+<h1 class="display-3 fw-bold">Welcome to QueueSine!</h1>
+<p>
+  Simple restaurant reservation app written in Django + Bootstrap + HTMX.
+</p>
+
 
 <div class="mb-3">
   <div class="input-group">
@@ -16,7 +20,7 @@
 </div>
 
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 gx-1 gy-3" id="restaurants"
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3" id="restaurants"
   hx-get="{% url 'restaurants:restaurant_listing' %}" hx-trigger="load" hx-target="#restaurants">
 </div>
 

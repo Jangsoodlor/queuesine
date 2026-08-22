@@ -16,5 +16,5 @@ urlpatterns = [
         views.RestaurantDetailView.as_view(),
         name="restaurant_detail",
     ),
-    path("partials/", include(htmx_urlpatterns)),
+    path("htmx/", include(htmx_urlpatterns)),
 ]

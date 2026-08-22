@@ -1,0 +1,43 @@
+{% block content %}
+
+<div class="pb-3">
+  <form class="d-flex flex-wrap gap-2" method="post">
+    {% csrf_token %}
+
+    <div class="input-group w-auto">
+      <span class="input-group-text">
+        <i class="bi bi-calendar3"></i>
+      </span>
+      <input type="date" name="reservation_date" class="form-control" required>
+    </div>
+
+    <div class="input-group w-auto">
+      <span class="input-group-text">
+        <i class="bi bi-clock"></i>
+      </span>
+      <input type="time" name="reservation_time" class="form-control" required>
+    </div>
+
+    <div class="input-group w-auto">
+      <span class="input-group-text">
+        <i class="bi bi-person"></i>
+      </span>
+      <select class="form-select" name="guests" required>
+        <option value="1">1 person</option>
+        <option value="2" selected>2 people</option>
+        <option value="3">3 people</option>
+        <option value="4">4 people</option>
+        <option value="5">5 people</option>
+        <option value="6">6 people</option>
+        <option value="7">7+ people</option>
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-danger px-4">Reserve Now!</button>
+
+  </form>
+
+</div>
+
+{% endblock %}
