@@ -14,9 +14,9 @@ class RestaurantDetailView(generic.DetailView):
 
 def menu_listing(request, pk: int):
     context = {"menus": Menu.objects.filter(restaurant_id=pk)}
-    return render(request, "partials/menu_listing.html", context)
+    return render(request, "restaurants/htmx/menu_listing.html", context)
 
 
 def restaurant_listing(request):
     context = {"restaurants": Restaurant.objects.all()}
-    return render(request, "partials/restaurant_listing.html", context)
+    return render(request, "restaurants/htmx/restaurant_listing.html", context)
