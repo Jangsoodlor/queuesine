@@ -1,27 +1,22 @@
 {% extends 'base_template.html' %}
-
-
 {% block content %}
-<h1 class="display-3 fw-bold">Welcome to QueueSine!</h1>
-<p>
-  Simple restaurant reservation app written in Django + Bootstrap + HTMX.
-</p>
-
-
-<div class="mb-3">
-  <div class="input-group">
-    <span class="input-group-text bg-white">
-      <i class="bi bi-search"></i>
-    </span>
-    <input type="search" id="restaurantSearch" class="form-control"
-      placeholder="Search restaurant name (Regex supported)" />
+  <h1 class="display-3 fw-bold">Welcome to QueueSine!</h1>
+  <p>Simple restaurant reservation app written in Django + Bootstrap + HTMX.</p>
+  <div class="mb-3">
+    <div class="input-group">
+      <span class="input-group-text bg-white">
+        <i class="bi bi-search"></i>
+      </span>
+      <input type="search"
+             id="restaurantSearch"
+             class="form-control"
+             placeholder="Search restaurant name (Regex supported)" />
+    </div>
+    <div class="form-text">Supports regex patterns</div>
   </div>
-  <div class="form-text">Supports regex patterns</div>
-</div>
-
-
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3" id="restaurants"
-  hx-get="{% url 'restaurants:restaurant_listing' %}" hx-trigger="load" hx-target="#restaurants">
-</div>
-
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3"
+       id="restaurants"
+       hx-get="{% url 'restaurants:restaurant_listing' %}"
+       hx-trigger="load"
+       hx-target="#restaurants"></div>
 {% endblock %}

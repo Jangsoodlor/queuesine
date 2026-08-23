@@ -1,16 +1,15 @@
 {% load static %}
 {% static 'images/food.jpg' as default_image %}
 {% load card_image %}
-
 {% for menu in menus %}
-<div class="col">
-  <div class="card me-2">
-    {% menu_card_image menu.image menu.name %}
-    <div class="card-body">
-      <h5 class="card-title">{{menu.name}}</h5>
-      <p class="card-text">{{menu.description|truncatechars:60}}</p>
-      <p class="card-text">$ {{menu.price|floatformat:2}}</p>
+  <div class="col">
+    <div class="card me-2">
+      {% menu_card_image menu.image menu.name %}
+      <div class="card-body">
+        <h5 class="card-title">{{ menu.name }}</h5>
+        <p class="card-text">{{ menu.description|truncatechars:60 }}</p>
+        <p class="card-text">$ {{ menu.price|floatformat:2 }}</p>
+      </div>
     </div>
   </div>
-</div>
 {% endfor %}

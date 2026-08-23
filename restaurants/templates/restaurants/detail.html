@@ -1,28 +1,24 @@
 {% extends 'base_template.html' %}
 {% load static %}
-
-
-
 {% block content %}
-
-<div class="position-relative h-100 d-flex flex-column justify-content-end pb-2">
-  <h1 class="display-3 fw-bold mb-1">{{ restaurant.name }}</h1>
-  <p class="mb-1"><i class="bi bi-geo-alt-fill"></i> {{ restaurant.address }}</p>
-  <p class="mb-0">{{ restaurant.description }}</p>
-</div>
-
-<h2>Reserve Seats Now!</h2>
-
-<div id="bar" hx-get="{% url 'reservations:query_bar' %}" hx-trigger="load" hx-target="#bar" hx-swap="outerHTML">
-  Loading reservation bar...
-</div>
-
-<h2>Menu</h2>
-
-<div class=" row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3" id="menus"
-  hx-get="{% url 'restaurants:menu_listing' restaurant.pk %}" hx-trigger="load" hx-target="#menus">
-  <!-- Optional placeholder while HTMX loads the menu -->
-  <p>Loading menu...</p>
-</div>
-
+  <div class="position-relative h-100 d-flex flex-column justify-content-end pb-2">
+    <h1 class="display-3 fw-bold mb-1">{{ restaurant.name }}</h1>
+    <p class="mb-1"><i class="bi bi-geo-alt-fill"></i> {{ restaurant.address }}</p>
+    <p class="mb-0">{{ restaurant.description }}</p>
+  </div>
+  <h2>Reserve Seats Now!</h2>
+  <div id="bar"
+       hx-get="{% url 'reservations:query_bar' restaurant.pk %}"
+       hx-trigger="load"
+       hx-target="#bar"
+       hx-swap="outerHTML">Loading reservation bar...</div>
+  <h2>Menu</h2>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3"
+       id="menus"
+       hx-get="{% url 'restaurants:menu_listing' restaurant.pk %}"
+       hx-trigger="load"
+       hx-target="#menus">
+    <!-- Optional placeholder while HTMX loads the menu -->
+    <p>Loading menu...</p>
+  </div>
 {% endblock %}
