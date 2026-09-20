@@ -1,39 +1,40 @@
-<div class="pb-3">
-  <form class="d-flex flex-wrap gap-2"
-        method="post"
-        action="{% url 'reservations:select_table' restaurant_id %}">
-    {% csrf_token %}
-    <div class="input-group w-auto">
-      <span class="input-group-text">
-        <i class="bi bi-calendar3"></i>
-      </span>
-      <input type="date"
-             name="reservation_date"
-             class="form-control"
-             value="{{ reservation_date }}"
-             required>
-    </div>
-    <div class="input-group w-auto">
-      <span class="input-group-text">
-        <i class="bi bi-clock"></i>
-      </span>
-      <select name="time_slot" class="form-select">
-        {% for ts in time_slots %}
-          <option value="{{ ts }}" {% if value == selected_time %}selected{% endif %}>{{ ts.time_slot }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="input-group w-auto">
-      <span class="input-group-text">
-        <i class="bi bi-person"></i>
-      </span>
-      <select name="party_size" class="form-select">
-        {% for value, label in guest_choices.items %}
-          <option value="{{ value }}"
-                  {% if value == selected_party_size %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <button type="submit" class="btn btn-danger px-4">Reserve Now!</button>
-  </form>
-</div>
+<form id="query-bar"
+      class="d-flex flex-wrap gap-2 pb-3"
+      hx-post="{% url 'reservations:query_bar' restaurant_id %}"
+      hx-target="this"
+      hx-swap="outerHTML">
+  {% csrf_token %}
+  <div class="input-group w-auto">
+    <span class="input-group-text">
+      <i class="bi bi-calendar3"></i>
+    </span>
+    <input type="date"
+           name="reservation_date"
+           class="form-control"
+           value="{{ reservation_date }}"
+           required>
+  </div>
+  <div class="input-group w-auto">
+    <span class="input-group-text">
+      <i class="bi bi-clock"></i>
+    </span>
+    <select name="selected_time" class="form-select">
+      {% for ts in time_slots %}
+        <option value="{{ ts.pk }}"
+                {% if ts.pk|stringformat:"s" == selected_time %}selected{% endif %}>{{ ts.time_slot }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="input-group w-auto">
+    <span class="input-group-text">
+      <i class="bi bi-person"></i>
+    </span>
+    <select name="party_size" class="form-select">
+      {% for value, label in guest_choices.items %}
+        <option value="{{ value }}"
+                {% if value == selected_party_size %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary px-4">Check Availability</button>
+</form>

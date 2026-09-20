@@ -1,0 +1,39 @@
+{% if available_tables %}
+  <!-- Wrap in a standard form -->
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="row g-3 mb-4">
+      {% for table in available_tables %}
+        <div class="col-12 col-md-6 col-lg-4">
+          <!-- 1. The hidden radio button -->
+          <input type="radio"
+                 class="btn-check"
+                 name="selected_table"
+                 id="table-{{ table.id }}"
+                 value="{{ table.id }}"
+                 required>
+          <!-- 2. The label styled to look like a card -->
+          <!-- Using btn-outline-primary gives it a nice border that fills in when selected -->
+          <label class="btn btn-outline-primary w-100 h-100 text-start p-3 shadow-sm"
+                 for="table-{{ table.id }}">
+            <h5 class="mb-2">{{ table.name }}</h5>
+            <p class="mb-0">
+              <strong>Capacity:</strong> {{ table.capacity }}
+              {% if table.capacity == 1 %}person{% else %}people{% endif %}
+            </p>
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Selection</button>
+  </form>
+{% else %}
+  <div class="alert alert-info">
+    {% if messages %}
+      {% for message in messages %}
+        <div id="alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    No tables available for the selected date, time, and party size.
+  </div>
+{% endif %}

@@ -1,13 +1,15 @@
 {% extends 'base_template.html' %}
 {% block content %}
   <div id="bar"
+       class="mb-10"
        hx-get="{% url 'reservations:query_bar' restaurant_id %}"
        hx-trigger="load"
        hx-target="#bar"
        hx-swap="outerHTML">
     <p>Loading query bar</p>
   </div>
-  {{ reservation_date }}
-  {{ time_slot }}
-  {{ party_size }}
+  <div hx-get="{% url 'reservations:table_selection' restaurant_id %}"
+       hx-trigger="load, newQuery from:body"
+       hx-include="#query-bar"
+       hx-swap="innerHTML"></div>
 {% endblock %}

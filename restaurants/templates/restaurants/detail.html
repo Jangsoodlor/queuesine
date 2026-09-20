@@ -6,13 +6,9 @@
     <p class="mb-1"><i class="bi bi-geo-alt-fill"></i> {{ restaurant.address }}</p>
     <p class="mb-0">{{ restaurant.description }}</p>
   </div>
-  <h2>Reserve Seats Now!</h2>
-  <div id="bar"
-       hx-get="{% url 'reservations:query_bar' restaurant.pk %}"
-       hx-trigger="load"
-       hx-target="#bar"
-       hx-swap="outerHTML">
-    <p>Loading query bar</p>
+  <div>
+    <a class="btn btn-primary"
+       href="{% url 'reservations:select_table' restaurant.pk %}">Reserve Seats Now!</a>
   </div>
   <h2>Menu</h2>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3"

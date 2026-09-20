@@ -6,6 +6,11 @@ app_name = "reservations"
 
 htmx_urlpatterns = [
     path("query_bar/<int:restaurant_id>", views.query_bar, name="query_bar"),
+    path(
+        "table_selection/<int:restaurant_id>",
+        views.table_selection,
+        name="table_selection",
+    ),
 ]
 
 urlpatterns = [
