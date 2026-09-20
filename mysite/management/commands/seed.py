@@ -6,6 +6,8 @@ from itertools import islice
 from django.core.management.base import BaseCommand
 
 from restaurants.models import Restaurant, Menu
+from reservations.models import Table, TimeSlot
+from datetime import time
 
 
 class Command(BaseCommand):
@@ -38,6 +40,8 @@ class Command(BaseCommand):
 
         self._seed_restaurants(file_path, limit)
         self._seed_menus(file_path, limit)
+        self._seed_tables()
+        self._seed_available_time()
 
     def print_seed_success(self, model: str, created_count: int, updated_count: int):
         self.stdout.write(
@@ -58,14 +62,16 @@ class Command(BaseCommand):
             for row in rows:
                 _, created = Restaurant.objects.update_or_create(
                     name=row["restaurantName"],
-                    description=row["restaurantDescription"],
                     address=row["restaurantAddress"],
-                    latitude=float(row["restaurantLatitude"]),
-                    longitude=float(row["restaurantLongitude"]),
-                    image=row["restaurantImageUrl"]
-                    if row["restaurantImageUrl"]
-                    else None,
-                    city=row["market"],
+                    defaults={
+                        "description": row["restaurantDescription"],
+                        "latitude": float(row["restaurantLatitude"]),
+                        "longitude": float(row["restaurantLongitude"]),
+                        "image": row["restaurantImageUrl"]
+                        if row["restaurantImageUrl"]
+                        else None,
+                        "city": row["market"],
+                    },
                 )
 
                 if created:
@@ -106,3 +112,53 @@ class Command(BaseCommand):
                     updated_count += 1
 
         self.print_seed_success(Menu.__name__, created_count, updated_count)
+
+    def _seed_tables(self):
+        created_count = 0
+        updated_count = 0
+
+        restaurants = Restaurant.objects.all()
+
+        # Create default tables for each restaurant
+        table_configs = [
+            {"name": "Table 1", "capacity": 2},
+            {"name": "Table 2", "capacity": 4},
+            {"name": "Table 3", "capacity": 6},
+            {"name": "Table 4", "capacity": 8},
+        ]
+
+        for restaurant in restaurants:
+            for config in table_configs:
+                _, created = Table.objects.update_or_create(
+                    restaurant=restaurant,
+                    name=config["name"],
+                    defaults={"capacity": config["capacity"]},
+                )
+                if created:
+                    created_count += 1
+                else:
+                    updated_count += 1
+
+        self.print_seed_success(Table.__name__, created_count, updated_count)
+
+    def _seed_available_time(self):
+        created_count = 0
+        updated_count = 0
+
+        restaurants = Restaurant.objects.all()
+
+        # Create time slots every 30 minutes from 11:00 to 22:00
+        times = [time(hour, minute) for hour in range(11, 23) for minute in [0]]
+
+        for restaurant in restaurants:
+            for time_slot in times:
+                _, created = TimeSlot.objects.update_or_create(
+                    restaurant=restaurant,
+                    time_slot=time_slot,
+                )
+                if created:
+                    created_count += 1
+                else:
+                    updated_count += 1
+
+        self.print_seed_success(TimeSlot.__name__, created_count, updated_count)
