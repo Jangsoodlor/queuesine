@@ -11,14 +11,15 @@
        hx-get="{% url 'reservations:query_bar' restaurant.pk %}"
        hx-trigger="load"
        hx-target="#bar"
-       hx-swap="outerHTML">Loading query bar...</div>
+       hx-swap="outerHTML">
+    <p>Loading query bar</p>
+  </div>
   <h2>Menu</h2>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gy-3"
        id="menus"
        hx-get="{% url 'restaurants:menu_listing' restaurant.pk %}"
        hx-trigger="load"
        hx-target="#menus">
-    <!-- Optional placeholder while HTMX loads the menu -->
     <p>Loading menu...</p>
   </div>
 {% endblock %}

@@ -17,11 +17,11 @@
       <span class="input-group-text">
         <i class="bi bi-clock"></i>
       </span>
-      <input type="time"
-             name="reservation_time"
-             value="{{ reservation_time }}"
-             class="form-control"
-             required>
+      <select name="time_slot" class="form-select">
+        {% for ts in time_slots %}
+          <option value="{{ ts }}" {% if value == selected_time %}selected{% endif %}>{{ ts.time_slot }}</option>
+        {% endfor %}
+      </select>
     </div>
     <div class="input-group w-auto">
       <span class="input-group-text">

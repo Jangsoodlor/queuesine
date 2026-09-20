@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from datetime import date, timedelta
+from .models import Reservation, Table, TimeSlot
 
 GUEST_CHOICES = {
     "1": "1 person",
@@ -13,12 +14,14 @@ GUEST_CHOICES = {
 
 
 def query_bar(request, restaurant_id: int):
+    time_slots = TimeSlot.objects.filter(restaurant=restaurant_id)
     context = {
         "restaurant_id": restaurant_id,
         "reservation_date": request.GET.get("reservation_date", ""),
-        "reservation_time": request.GET.get("reservation_time", ""),
+        "time_slots": time_slots,
         "guest_choices": GUEST_CHOICES,
-        "selected_party_size": "2",
+        "selected_party_size": request.GET.get("party_size", "2"),
+        "selected_time": request.GET.get("selected_time", ""),
     }
     return render(request, "reservations/htmx/query_bar.html", context)
 
@@ -34,13 +37,14 @@ def select_table(request, restaurant_id: int):
         return redirect("error.html")
 
     context = {
+        "restaurant_id": restaurant_id,
         "reservation_date": request.POST.get("reservation_date"),
-        "reservation_time": request.POST.get("reservation_time"),
+        "time_slot": request.POST.get("time_slot"),
         "party_size": request.POST.get("party_size"),
     }
 
     return render(request, "reservations/select_table.html", context=context)
 
 
-def table_reserved(request, restaurant_id: int):
+def confirm_reservation(request, restaurant_id: int):
     pass
